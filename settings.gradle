@@ -1,0 +1,3 @@
+rootProject.name = "testHook"
+include ':app'
+include ':permissionMonitor'
