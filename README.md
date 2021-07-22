@@ -1,8 +1,19 @@
 ## PermissionMonitor
 通过hook监控APP的隐私权限方法调用
 
-## install 
+## install
+```
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
 
+```
+```
+implementation 'com.github.huage2580:PermissionMonitor:1.0.0'
+```
 
 ## how to use
 ```java
