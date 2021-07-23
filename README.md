@@ -12,7 +12,7 @@ allprojects {
 
 ```
 ```
-implementation 'com.github.huage2580:PermissionMonitor:1.0.0'
+implementation 'com.github.huage2580:PermissionMonitor:1.0.1'
 ```
 
 ## how to use
