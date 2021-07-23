@@ -1,4 +1,4 @@
-package com.hua.permissionmonitor.method;
+package com.hua.permissionmonitor.handler;
 
 
 import android.util.Log;
@@ -24,12 +24,18 @@ import com.hua.permissionmonitor.PermissionMonitor;
  * @author hua
  * @file ContentResolverHandler
  */
-public class ContentResolverHandler extends MethodHandler{
+public class ParamsPrintHandler extends MethodHandler {
     private static final String TAG = PermissionMonitor.TAG;
 
     @Override
     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-        Log.i(TAG, "**检测到风险内容查询: "+param.args[0].toString());
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Object arg : param.args) {
+            stringBuilder.append("[");
+            stringBuilder.append(arg.toString());
+            stringBuilder.append("],");
+        }
+        Log.i(TAG, "**参数打印: "+stringBuilder.toString());
         super.beforeHookedMethod(param);
     }
 }

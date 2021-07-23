@@ -5,7 +5,7 @@ import android.util.Log;
 import com.hua.permissionmonitor.method.ClassMethodGroup;
 import com.hua.permissionmonitor.method.HookMethodList;
 import com.hua.permissionmonitor.method.StrictMethodGroupList;
-import com.hua.permissionmonitor.method.MethodHandler;
+import com.hua.permissionmonitor.handler.MethodHandler;
 import com.hua.permissionmonitor.method.MethodWrapper;
 import com.hua.permissionmonitor.method.NormalMethodList;
 

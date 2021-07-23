@@ -1,5 +1,8 @@
 package com.hua.testhook
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.database.Cursor
 import android.os.Bundle
 import android.provider.ContactsContract
@@ -21,14 +24,16 @@ class MainActivity : AppCompatActivity() {
         val host = Host()
         host.fuck()
         host.fuck(621)
-        packageManager.getInstalledPackages(0)
-        val phoneCursor: Cursor? = contentResolver.query(
-            Phone.CONTENT_URI,
-            arrayOf(
-                Phone.DISPLAY_NAME, Phone.NUMBER, ContactsContract.Contacts.Photo.PHOTO_ID, Phone.CONTACT_ID
-            ), null, null, null
-        )
-        phoneCursor?.moveToNext()
+//        packageManager.getInstalledPackages(0)
+//        val phoneCursor: Cursor? = contentResolver.query(
+//            Phone.CONTENT_URI,
+//            arrayOf(
+//                Phone.DISPLAY_NAME, Phone.NUMBER, ContactsContract.Contacts.Photo.PHOTO_ID, Phone.CONTACT_ID
+//            ), null, null, null
+//        )
+//        phoneCursor?.moveToNext()
+        val clip = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clip.setPrimaryClip(ClipData.newPlainText("t","text"))
     }
 
 

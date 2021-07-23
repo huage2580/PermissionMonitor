@@ -1,4 +1,4 @@
-package com.hua.permissionmonitor.method;
+package com.hua.permissionmonitor.handler;
 
 import android.util.Log;
 

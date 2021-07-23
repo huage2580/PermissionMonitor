@@ -7,6 +7,8 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanSettings;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ContentResolver;
 import android.graphics.Rect;
 import android.hardware.Camera;
@@ -20,6 +22,9 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.WorkSource;
 import android.provider.Settings;
+
+import com.hua.permissionmonitor.handler.ContentResolverHandler;
+import com.hua.permissionmonitor.handler.SettingsResolverHandler;
 
 import java.net.NetworkInterface;
 import java.util.LinkedList;
@@ -84,11 +89,23 @@ public class NormalMethodList extends HookMethodList {
         list.add(new MethodWrapper(android.telephony.TelephonyManager.class,"getImei",int.class));
         list.add(new MethodWrapper(android.telephony.TelephonyManager.class,"getMeid",int.class));
         list.add(new MethodWrapper(android.telephony.TelephonyManager.class,"getSimSerialNumber",int.class));
+        list.add(new MethodWrapper(android.telephony.TelephonyManager.class,"getSimOperatorNameForPhone",int.class));
+        list.add(new MethodWrapper(android.telephony.TelephonyManager.class,"getSimCountryIsoForPhone",int.class));
+        list.add(new MethodWrapper(android.telephony.TelephonyManager.class,"getTypeAllocationCode",int.class));
+        list.add(new MethodWrapper(android.telephony.TelephonyManager.class,"getManufacturerCode",int.class));
+        list.add(new MethodWrapper(android.telephony.TelephonyManager.class,"getNaiBySubscriberId",int.class));
+        list.add(new MethodWrapper(android.telephony.TelephonyManager.class,"getPhoneTypeFromNetworkType",int.class));
+        list.add(new MethodWrapper(android.telephony.TelephonyManager.class,"getTelephonyProperty",int.class,String.class,String.class));
+        list.add(new MethodWrapper(android.telephony.TelephonyManager.class,"getTelephonyProperty",String.class,String.class));
         list.add(new MethodWrapper(Build.class,"getSerial"));
         list.add(new MethodWrapper(android.net.wifi.WifiInfo.class,"getMacAddress"));
         list.add(new MethodWrapper(java.net.NetworkInterface.class,"getHardwareAddress"));
-        list.add(new MethodWrapper(android.provider.Settings.Secure.class,"getString", android.content.ContentResolver.class,String.class));
-        list.add(new MethodWrapper(Settings.System.class,"getString", android.content.ContentResolver.class,String.class));
+        MethodWrapper s1 = new MethodWrapper(android.provider.Settings.Secure.class,"getString", android.content.ContentResolver.class,String.class);
+        s1.setMethodHandler(new SettingsResolverHandler());
+        list.add(s1);
+        MethodWrapper s2 = new MethodWrapper(Settings.System.class,"getString", android.content.ContentResolver.class,String.class);
+        s2.setMethodHandler(new SettingsResolverHandler());
+        list.add(s2);
         //-----定位
         list.add(new MethodWrapper(android.location.LocationManager.class,"getLastLocation"));
         list.add(new MethodWrapper(android.location.LocationManager.class,"getLastKnownLocation",String.class));
@@ -120,9 +137,12 @@ public class NormalMethodList extends HookMethodList {
         //--拍照
         list.add(new MethodWrapper(Camera.class,"startPreview"));
         list.add(new MethodWrapper(CameraManager.class,"openCameraDeviceUserAsync",String.class, CameraDevice.StateCallback.class, Executor.class,int.class));
-
-
-
+        //--剪贴板
+        list.add(new MethodWrapper(ClipboardManager.class,"getPrimaryClip"));
+        list.add(new MethodWrapper(ClipboardManager.class,"getText"));
+        list.add(MethodWrapper.newPrint(ClipboardManager.class,"setText",CharSequence.class));
+        list.add(MethodWrapper.newPrint(ClipboardManager.class,"setPrimaryClip", ClipData.class));
+        list.add(new MethodWrapper(ClipData.class,"getItemAt",int.class));
 
 
         //-----------

@@ -2,12 +2,20 @@ package com.hua.permissionmonitor.method;
 
 
 import com.hua.permissionmonitor.PermissionMonitor;
+import com.hua.permissionmonitor.handler.MethodHandler;
+import com.hua.permissionmonitor.handler.ParamsPrintHandler;
 
 public class MethodWrapper {
     private Class<?> targetClass;
     private String targetMethod;
     private Class<?>[] params;
     private MethodHandler methodHandler;
+
+    public static MethodWrapper newPrint(Class<?> targetClass, String targetMethod, Class<?>... params){
+        MethodWrapper temp = new MethodWrapper(targetClass, targetMethod, params);
+        temp.setMethodHandler(new ParamsPrintHandler());
+        return temp;
+    }
 
     public MethodWrapper(Class<?> targetClass, String targetMethod, Class<?>... params) {
         this.targetClass = targetClass;
