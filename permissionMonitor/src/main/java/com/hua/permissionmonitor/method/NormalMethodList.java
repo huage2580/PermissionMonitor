@@ -1,6 +1,7 @@
 package com.hua.permissionmonitor.method;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -10,6 +11,7 @@ import android.bluetooth.le.ScanSettings;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ContentResolver;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraDevice;
@@ -60,6 +62,7 @@ public class NormalMethodList extends HookMethodList {
         //PackageManager
         ClassMethodGroup pkgManagerHook = new ClassMethodGroup("android.app.ApplicationPackageManager");
         pkgManagerHook.addMethod("getInstalledPackagesAsUser");
+        pkgManagerHook.addMethod("getPackageInfoAsUser");
         list.add(pkgManagerHook);
         //SmsManager    短信
         ClassMethodGroup smsManagerHook = new ClassMethodGroup("android.telephony.SmsManager");
@@ -144,6 +147,8 @@ public class NormalMethodList extends HookMethodList {
         list.add(MethodWrapper.newPrint(ClipboardManager.class,"setPrimaryClip", ClipData.class));
         list.add(new MethodWrapper(ClipData.class,"getItemAt",int.class));
 
+        //---为了奇怪的处理---
+        list.add(new MethodWrapper(ActivityManager.class,"getRunningAppProcesses"));
 
         //-----------
 
